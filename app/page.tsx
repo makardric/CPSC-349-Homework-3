@@ -2,11 +2,14 @@
 import { useState, useEffect } from "react";
 import styles from "./page.module.css";
 
+// movie card component
 function MovieCard({ movie }: { movie: any }) {
+  // the poster url is given a placeholder initially
   const posterUrl = movie.poster_path 
     ? `https://image.tmdb.org/t/p/w200${movie.poster_path}`
     : 'https://via.placeholder.com/200x300?text=No+Poster';
 
+  // returns a movie card element with an image, a title, its release date, and its rating
   return (
     <div className={styles.movieCard}>
       <img src={posterUrl} alt={movie.title} />
@@ -17,15 +20,22 @@ function MovieCard({ movie }: { movie: any }) {
   );
 }
 
+// "main" function for the movie page
 export default function MoviePage() {
-const [movies, setMovies] = useState([]);
+  
+  // variables
+  const [movies, setMovies] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const apiKey = "91dee199fa85e327f0045f67acd36c87";
 
+  // api fetch
   const fetchMovies = async () => {
     const url = searchTerm 
+    // encodeURIComponent handles spaces and other special characters that the user might enter
+    // if the user isn't searching for anything it defaults to showing the movies on the current page
+    // if the user is searching for someting it will display movies that match the user's search terms
       ? `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${encodeURIComponent(searchTerm)}&page=${currentPage}`
       : `https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}&page=${currentPage}`;
 
@@ -35,6 +45,8 @@ const [movies, setMovies] = useState([]);
     setTotalPages(data.total_pages || 1);
   };
 
+  // new movies are fetched according to the state array
+  // either if the user is typing in the search bar or if the user is going to a different page
   useEffect(() => {
     fetchMovies();
   }, [searchTerm, currentPage]);
@@ -46,7 +58,9 @@ const sortMovies = (value: string) => {
     };
 
     const sorted = [...movies].sort((a: any, b: any) => {
-      // Release Date Sorting
+      // sorting the release date by seeing if the difference is positive or negative
+      // if positive, the oldest movie goes first
+      // if negative, the newest movie goes first
       if (value === "release-asc") {
         return new Date(a.release_date).getTime() - new Date(b.release_date).getTime();
       }
@@ -54,7 +68,7 @@ const sortMovies = (value: string) => {
         return new Date(b.release_date).getTime() - new Date(a.release_date).getTime();
       }
       
-      // Rating Sorting
+      // same as sorting the release date but with the rating averages
       if (value === "rating-asc") {
         return a.vote_average - b.vote_average;
       }
@@ -68,6 +82,7 @@ const sortMovies = (value: string) => {
     setMovies(sorted);
   };
 
+  // html elements
   return (
     <main>
       <div className={styles.searchArea}>

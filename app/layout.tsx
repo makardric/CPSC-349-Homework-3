@@ -3,11 +3,13 @@ import styles from "./page.module.css";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
+    // html 
     <html lang="en">
       <body>
         <div className={styles.titleHeader}>
           <h3>Movie Explorer</h3>
         </div>
+      {/* display whatever is in page.tsx into the {children} section */}
         {children}
       </body>
     </html>
