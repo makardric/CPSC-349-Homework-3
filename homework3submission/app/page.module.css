@@ -23,6 +23,14 @@
   padding: 20px;
 }
 
+.searchArea input, .searchArea select {
+  background-color: white;
+  color: black;
+  border: 1px solid #ccc;
+  padding: 5px;
+  border-radius: 4px;
+}
+
 .movieDisplay {
   display: grid;
   grid-template-columns: repeat(auto-fill, 200px);

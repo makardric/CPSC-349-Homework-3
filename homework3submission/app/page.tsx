@@ -70,7 +70,7 @@ const sortMovies = (value: string) => {
       <div className={styles.searchArea}>
         <input 
           type="text" 
-          placeholder="Search..." 
+          placeholder="Search for a movie..." 
           onChange={(e) => {
             setSearchTerm(e.target.value);
             setCurrentPage(1); 
