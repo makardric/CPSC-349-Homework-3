@@ -40,7 +40,10 @@ const [movies, setMovies] = useState([]);
   }, [searchTerm, currentPage]);
 
 const sortMovies = (value: string) => {
-    if (value === "default") return;
+    if (value === "default"){
+      fetchMovies();
+      return;
+    };
 
     const sorted = [...movies].sort((a: any, b: any) => {
       // Release Date Sorting
