@@ -22,7 +22,7 @@ const [movies, setMovies] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const apiKey = "YOUR_TMDB_API_KEY";
+  const apiKey = "91dee199fa85e327f0045f67acd36c87";
 
   const fetchMovies = async () => {
     const url = searchTerm 
@@ -39,8 +39,52 @@ const [movies, setMovies] = useState([]);
     fetchMovies();
   }, [searchTerm, currentPage]);
 
+const sortMovies = (value: string) => {
+    if (value === "default") return;
+
+    const sorted = [...movies].sort((a: any, b: any) => {
+      // Release Date Sorting
+      if (value === "release-asc") {
+        return new Date(a.release_date).getTime() - new Date(b.release_date).getTime();
+      }
+      if (value === "release-desc") {
+        return new Date(b.release_date).getTime() - new Date(a.release_date).getTime();
+      }
+      
+      // Rating Sorting
+      if (value === "rating-asc") {
+        return a.vote_average - b.vote_average;
+      }
+      if (value === "rating-desc") {
+        return b.vote_average - a.vote_average;
+      }
+      
+      return 0;
+    });
+
+    setMovies(sorted);
+  };
+
   return (
     <main>
+      <div className={styles.searchArea}>
+        <input 
+          type="text" 
+          placeholder="Search..." 
+          onChange={(e) => {
+            setSearchTerm(e.target.value);
+            setCurrentPage(1); 
+          }} 
+        />
+        <select onChange={(e) => sortMovies(e.target.value)}>
+          <option value="default">Sort By</option>
+          <option value="release-asc">Release Date (Asc)</option>
+          <option value="release-desc">Release Date (Desc)</option>
+          <option value="rating-asc">Rating (Asc)</option>
+          <option value="rating-desc">Rating (Desc)</option>
+        </select>
+      </div>
+
       <div className={styles.movieDisplay}>
         {movies.map((movie: any) => (
           <MovieCard key={movie.id} movie={movie} />
