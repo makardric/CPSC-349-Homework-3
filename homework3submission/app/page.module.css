@@ -60,4 +60,18 @@
   align-items: center;
   gap: 20px;
   padding: 40px;
+  background-color: white;
+  color: black;
+}
+
+.navigation button {
+  background-color: #2987cc;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+}
+
+.navigation button:hover:not(:disabled) {
+  background-color: #1a64b3;
 }
