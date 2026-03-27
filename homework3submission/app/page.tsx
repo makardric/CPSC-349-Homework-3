@@ -18,13 +18,33 @@ function MovieCard({ movie }: { movie: any }) {
 }
 
 export default function MoviePage() {
+const [movies, setMovies] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const apiKey = "YOUR_TMDB_API_KEY";
+
+  const fetchMovies = async () => {
+    const url = searchTerm 
+      ? `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${encodeURIComponent(searchTerm)}&page=${currentPage}`
+      : `https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}&page=${currentPage}`;
+
+    const res = await fetch(url);
+    const data = await res.json();
+    setMovies(data.results || []);
+    setTotalPages(data.total_pages || 1);
+  };
+
+  useEffect(() => {
+    fetchMovies();
+  }, [searchTerm, currentPage]);
+
   return (
     <main>
-      <div className={styles.searchArea}>
-        {}
-      </div>
       <div className={styles.movieDisplay}>
-        {}
+        {movies.map((movie: any) => (
+          <MovieCard key={movie.id} movie={movie} />
+        ))}
       </div>
     </main>
   );
