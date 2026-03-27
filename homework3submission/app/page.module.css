@@ -1,3 +1,20 @@
+.titleHeader {
+  display: flex;
+  height: 100px;
+  justify-content: center;
+  align-items: center;
+  padding: 25px;
+  background-color: #273544;
+  margin: 0;
+}
+
+.titleHeader h3 {
+  color: white;
+  font-size: 30px;
+  font-weight: bold;
+  margin: 0;
+}
+
 .searchArea {
   display: flex;
   justify-content: center;
@@ -12,6 +29,7 @@
   gap: 50px;
   padding: 20px;
   justify-content: center;
+  background-color: white;
 }
 
 .movieCard {

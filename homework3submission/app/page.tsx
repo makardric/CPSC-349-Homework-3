@@ -90,6 +90,24 @@ const sortMovies = (value: string) => {
           <MovieCard key={movie.id} movie={movie} />
         ))}
       </div>
+
+      <div className={styles.navigation}>
+        <button 
+          disabled={currentPage === 1}
+          onClick={() => setCurrentPage(currentPage - 1)}
+        >
+          Previous
+        </button>
+        
+        <span>Page {currentPage} of {totalPages}</span>
+
+        <button 
+          disabled={currentPage >= totalPages}
+          onClick={() => setCurrentPage(currentPage + 1)}
+        >
+          Next
+        </button>
+      </div>
     </main>
   );
 }
